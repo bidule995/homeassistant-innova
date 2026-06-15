@@ -1,2 +1,3 @@
 homeassistant==2026.6.3
-innova-controls==2.2.3
+grpcio==1.81.1
+protobuf==7.35.1

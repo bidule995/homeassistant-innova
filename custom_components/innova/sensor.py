@@ -61,7 +61,7 @@ class InnovaAmbientSensor(InnovaTemperatureSensor):
         return f"{self._device_info.name}-{self.device_class}"
 
     @property
-    def native_value(self) -> int:
+    def native_value(self) -> float:
         return self._innova.ambient_temp
 
     @property
@@ -78,7 +78,7 @@ class InnovaWaterSensor(InnovaTemperatureSensor):
         return f"{self._device_info.name}-water-{self.device_class}"
 
     @property
-    def native_value(self) -> int:
+    def native_value(self) -> float | None:
         return self._innova.water_temp
 
     @property

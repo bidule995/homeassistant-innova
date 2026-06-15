@@ -1,6 +1,7 @@
+from typing import Any
+
 from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
 from homeassistant.helpers.entity import DeviceInfo
-from innova_controls.innova import Innova
 
 from .const import DOMAIN, MANUFACTURER
 
@@ -8,7 +9,7 @@ from .const import DOMAIN, MANUFACTURER
 class InnovaDeviceInfo:
     """Provide device info from the device, shared across platforms."""
 
-    def __init__(self, innova: Innova) -> None:
+    def __init__(self, innova: Any) -> None:
         """Initialize the DeviceInfo."""
         self._innova = innova
         self._unique_id = self._innova.serial

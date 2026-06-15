@@ -1,34 +1,58 @@
 {
-    "config": {
-      "abort": {
-        "already_configured": "Zariadenie je už konfigurované"
+  "config": {
+    "abort": {
+      "already_configured": "Zariadenie je uz nakonfigurovane",
+      "unsupported_device": "Tento typ zariadenia DiffusApp este nie je podporovany"
+    },
+    "error": {
+      "cannot_connect": "Nepodarilo sa pripojit",
+      "invalid_auth": "Neplatne overenie",
+      "unknown": "Neocakavana chyba"
+    },
+    "step": {
+      "user": {
+        "title": "Ucet DiffusApp",
+        "description": "Prihlaste sa rovnakym uctom ako v Diffus'app.",
+        "data": {
+          "email": "E-mail",
+          "password": "Heslo"
+        }
       },
-      "error": {
-        "cannot_connect": "Nepodarilo sa pripojiť",
-        "invalid_auth": "Neplatné overenie",
-        "unknown": "Neočakávaná chyba"
+      "home": {
+        "title": "Domacnost DiffusApp",
+        "description": "Vyberte domacnost, ktora obsahuje jednotku Innova.",
+        "data": {
+          "home_id": "Domacnost"
+        }
       },
-      "step": {
-        "user": {
-          "data": {
-            "host": "Host"
-          }
-        },
-        "init": {
-          "data": {
-            "scan_interval": "Nastavte interval skenovania (v sekundách)"
-          }
+      "device": {
+        "title": "Jednotka Innova",
+        "description": "Vyberte cloudovu jednotku alebo ju importujte pomocou BLE hodnoty device_auth.",
+        "data": {
+          "device_source": "Zariadenie"
+        }
+      },
+      "manual": {
+        "title": "Rucny BLE import",
+        "description": "Vlozte jednu hex hodnotu device_auth zachytenu pocas BLE provisioningu Diffus'app.",
+        "data": {
+          "device_auth": "device_auth"
+        }
+      },
+      "init": {
+        "data": {
+          "scan_interval": "Nastavit interval aktualizacie (sekundy)"
         }
       }
-    },
-    "options": {
-      "step": {
-        "init": {
-          "data": {
-            "scan_interval": "Interval skenovania (sekundy)"
-          }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "scan_interval": "Interval aktualizacie (sekundy)"
         }
       }
     }
   }
-  
+}

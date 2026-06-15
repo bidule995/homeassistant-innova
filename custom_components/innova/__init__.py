@@ -5,13 +5,20 @@ import logging
 from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_HOST, Platform
+from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from innova_controls.innova import Innova
 
-from .const import DOMAIN, DEFAULT_SCAN_INTERVAL
+from .cloud_device import InnovaCloudDevice
+from .const import (
+    CONF_DEVICE_NAME,
+    CONF_DEVICE_TYPE,
+    CONF_MAC_ADDRESS,
+    CONF_TOKEN,
+    DEFAULT_SCAN_INTERVAL,
+    DOMAIN,
+)
 from .coordinator import InnovaCoordinator
+from .grpc_client import DiffusAppGrpcClient
 
 PLATFORMS: list[Platform] = [Platform.CLIMATE, Platform.SENSOR, Platform.SWITCH]
 
@@ -21,9 +28,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Innova AC from a config entry."""
     hass.data.setdefault(DOMAIN, {})
-    host = entry.data[CONF_HOST]
-    session = async_get_clientsession(hass)
-    api = Innova(http_session=session, host=host)
+    api = _device_from_entry(entry)
 
     # Get the scan interval from options, falling back to the default
     coordinator = await _async_update_coordinator(hass, entry, api)
@@ -39,17 +44,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
-        hass.data[DOMAIN].pop(entry.entry_id)
+        coordinator = hass.data[DOMAIN].pop(entry.entry_id)
+        await coordinator.innova.async_close()
 
     return unload_ok
 
 
 async def _async_options_updated(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Handle options update."""
-    host = entry.data[CONF_HOST]
-    session = async_get_clientsession(hass)
-    api = Innova(http_session=session, host=host)
-    
     # Reinitialize the coordinator with updated options
     coordinator = hass.data[DOMAIN][entry.entry_id]
     scan_interval_seconds = entry.options.get("scan_interval", DEFAULT_SCAN_INTERVAL)
@@ -68,7 +70,9 @@ async def _async_options_updated(hass: HomeAssistant, entry: ConfigEntry) -> Non
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
 
-async def _async_update_coordinator(hass: HomeAssistant, entry: ConfigEntry, api: Innova):
+async def _async_update_coordinator(
+    hass: HomeAssistant, entry: ConfigEntry, api: InnovaCloudDevice
+) -> InnovaCoordinator:
     """Helper function to update the coordinator."""
     scan_interval_seconds = entry.options.get("scan_interval", DEFAULT_SCAN_INTERVAL)
     scan_interval = timedelta(seconds=scan_interval_seconds)
@@ -82,7 +86,9 @@ async def _async_update_coordinator(hass: HomeAssistant, entry: ConfigEntry, api
     return coordinator
 
 
-def create_coordinator(hass: HomeAssistant, api: Innova, scan_interval: timedelta) -> InnovaCoordinator:
+def create_coordinator(
+    hass: HomeAssistant, api: InnovaCloudDevice, scan_interval: timedelta
+) -> InnovaCoordinator:
     """Create the coordinator with the provided scan interval."""
     coordinator = InnovaCoordinator(
         hass,
@@ -93,3 +99,15 @@ def create_coordinator(hass: HomeAssistant, api: Innova, scan_interval: timedelt
     )
 
     return coordinator
+
+
+def _device_from_entry(entry: ConfigEntry) -> InnovaCloudDevice:
+    """Create the cloud-backed device facade from a config entry."""
+    mac_address = entry.data[CONF_MAC_ADDRESS]
+    token = entry.data[CONF_TOKEN]
+    return InnovaCloudDevice(
+        grpc_client=DiffusAppGrpcClient(token=token, mac_address=mac_address),
+        mac_address=mac_address,
+        name=entry.data[CONF_DEVICE_NAME],
+        device_type=entry.data[CONF_DEVICE_TYPE],
+    )

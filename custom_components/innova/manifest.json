@@ -2,17 +2,18 @@
   "domain": "innova",
   "name": "Innova",
   "codeowners": [
-    "@danielrivard"
+    "@bidule995"
   ],
   "config_flow": true,
-  "documentation": "https://github.com/danielrivard/homeassistant-innova/blob/main/README.md",
-  "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/danielrivard/homeassistant-innova/issues",
+  "documentation": "https://github.com/bidule995/homeassistant-innova/blob/main/README.md",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/bidule995/homeassistant-innova/issues",
   "loggers": [
     "innova"
   ],
   "requirements": [
-    "innova-controls==2.2.3"
+    "grpcio==1.81.1",
+    "protobuf==7.35.1"
   ],
-  "version": "1.5.0"
+  "version": "2.0.0-beta.1"
 }

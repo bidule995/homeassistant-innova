@@ -1,34 +1,58 @@
 {
-    "config": {
-      "abort": {
-        "already_configured": "Device is already configured"
+  "config": {
+    "abort": {
+      "already_configured": "Device is already configured",
+      "unsupported_device": "This DiffusApp device type is not supported yet"
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error"
+    },
+    "step": {
+      "user": {
+        "title": "DiffusApp account",
+        "description": "Sign in with the same account used by Diffus'app.",
+        "data": {
+          "email": "Email",
+          "password": "Password"
+        }
       },
-      "error": {
-        "cannot_connect": "Failed to connect",
-        "invalid_auth": "Invalid authentication",
-        "unknown": "Unexpected error"
+      "home": {
+        "title": "DiffusApp home",
+        "description": "Select the home that contains the Innova unit.",
+        "data": {
+          "home_id": "Home"
+        }
       },
-      "step": {
-        "user": {
-          "data": {
-            "host": "Host"
-          }
-        },
-        "init": {
-          "data": {
-            "scan_interval": "Set Scan Interval (in seconds)"
-          }
+      "device": {
+        "title": "Innova unit",
+        "description": "Select a cloud-listed unit, or import one with its BLE device_auth value.",
+        "data": {
+          "device_source": "Device"
+        }
+      },
+      "manual": {
+        "title": "Manual BLE import",
+        "description": "Paste one device_auth hex value captured from Diffus'app BLE provisioning.",
+        "data": {
+          "device_auth": "device_auth"
+        }
+      },
+      "init": {
+        "data": {
+          "scan_interval": "Set scan interval (seconds)"
         }
       }
-    },
-    "options": {
-      "step": {
-        "init": {
-          "data": {
-            "scan_interval": "Scan Interval (seconds)"
-          }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "scan_interval": "Scan interval (seconds)"
         }
       }
     }
   }
-  
+}

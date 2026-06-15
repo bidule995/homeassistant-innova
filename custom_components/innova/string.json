@@ -1,20 +1,53 @@
 {
-    "config": {
-      "step": {
-        "user": {
-          "data": {
-            "host": "[%key:common::config_flow::data::host%]"
-          }
+  "config": {
+    "step": {
+      "user": {
+        "title": "DiffusApp account",
+        "description": "Sign in with the same account used by Diffus'app.",
+        "data": {
+          "email": "[%key:common::config_flow::data::email%]",
+          "password": "[%key:common::config_flow::data::password%]"
         }
       },
-      "error": {
-        "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
-        "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
-        "unknown": "[%key:common::config_flow::error::unknown%]"
+      "home": {
+        "title": "DiffusApp home",
+        "description": "Select the home that contains the Innova unit.",
+        "data": {
+          "home_id": "Home"
+        }
       },
-      "abort": {
-        "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+      "device": {
+        "title": "Innova unit",
+        "description": "Select a cloud-listed unit, or import one with its BLE device_auth value.",
+        "data": {
+          "device_source": "Device"
+        }
+      },
+      "manual": {
+        "title": "Manual BLE import",
+        "description": "Paste one device_auth hex value captured from Diffus'app BLE provisioning.",
+        "data": {
+          "device_auth": "device_auth"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]",
+      "unsupported_device": "This DiffusApp device type is not supported yet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "scan_interval": "Scan interval (seconds)"
+        }
       }
     }
   }
-  
+}

@@ -16,7 +16,9 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ):
     coordinator: InnovaCoordinator = hass.data[DOMAIN][config_entry.entry_id]
-    entities = [InnovaSchedulingSwitch(coordinator)]
+    entities = []
+    if coordinator.innova.supports_scheduling:
+        entities.append(InnovaSchedulingSwitch(coordinator))
     if coordinator.innova.supports_keyboard_lock:
         entities.append(InnovaKeyboardLockSwitch(coordinator))
     async_add_entities(entities)

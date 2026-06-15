@@ -1,34 +1,58 @@
 {
-    "config": {
-      "abort": {
-        "already_configured": "L'unité est déjà configurée"
+  "config": {
+    "abort": {
+      "already_configured": "L'unite est deja configuree",
+      "unsupported_device": "Ce type d'appareil DiffusApp n'est pas encore pris en charge"
+    },
+    "error": {
+      "cannot_connect": "Echec de connexion",
+      "invalid_auth": "Authentification invalide",
+      "unknown": "Erreur inattendue"
+    },
+    "step": {
+      "user": {
+        "title": "Compte DiffusApp",
+        "description": "Connectez-vous avec le meme compte que dans Diffus'app.",
+        "data": {
+          "email": "E-mail",
+          "password": "Mot de passe"
+        }
       },
-      "error": {
-        "cannot_connect": "Échec de connexion",
-        "invalid_auth": "Authentification invalide",
-        "unknown": "Erreur inattendue"
+      "home": {
+        "title": "Maison DiffusApp",
+        "description": "Selectionnez la maison qui contient l'unite Innova.",
+        "data": {
+          "home_id": "Maison"
+        }
       },
-      "step": {
-        "user": {
-          "data": {
-            "host": "Hôte"
-          }
-        },
-        "init": {
-          "data": {
-            "scan_interval": "Définir l'intervalle de mise à jour (en secondes)"
-          }
+      "device": {
+        "title": "Unite Innova",
+        "description": "Selectionnez une unite du cloud, ou importez-en une avec sa valeur BLE device_auth.",
+        "data": {
+          "device_source": "Appareil"
+        }
+      },
+      "manual": {
+        "title": "Import BLE manuel",
+        "description": "Collez une valeur device_auth hex capturee pendant le provisionnement BLE Diffus'app.",
+        "data": {
+          "device_auth": "device_auth"
+        }
+      },
+      "init": {
+        "data": {
+          "scan_interval": "Definir l'intervalle de mise a jour (secondes)"
         }
       }
-    },
-    "options": {
-      "step": {
-        "init": {
-          "data": {
-            "scan_interval": "Intervalle de mise à jour (secondes)"
-          }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "scan_interval": "Intervalle de mise a jour (secondes)"
         }
       }
     }
   }
-  
+}

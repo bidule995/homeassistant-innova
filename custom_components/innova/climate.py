@@ -16,9 +16,8 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from innova_controls.fan_speed import FanSpeed
-from innova_controls.mode import Mode
 
+from .cloud_device import FanSpeed
 from .const import DOMAIN
 from .coordinator import InnovaCoordinator
 from .device_info import InnovaDeviceInfo
@@ -188,7 +187,9 @@ class InnovaEntity(CoordinatorEntity[InnovaCoordinator], ClimateEntity):
 
     @property
     def preset_modes(self) -> list[str] | None:
-        return [PRESET_NONE, PRESET_SLEEP]
+        if self.coordinator.innova.supports_preset:
+            return [PRESET_NONE, PRESET_SLEEP]
+        return None
 
     @property
     def preset_mode(self) -> str | None:
@@ -211,6 +212,8 @@ class InnovaEntity(CoordinatorEntity[InnovaCoordinator], ClimateEntity):
 
     @property
     def swing_modes(self) -> list[str] | None:
+        if not self.coordinator.innova.supports_swing:
+            return None
         return [SWING_OFF, SWING_ON]
 
     @property
