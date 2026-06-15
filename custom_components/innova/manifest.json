@@ -12,8 +12,8 @@
     "innova"
   ],
   "requirements": [
-    "grpcio==1.81.1",
-    "protobuf==7.35.1"
+    "grpcio==1.78.0",
+    "protobuf==6.32.0"
   ],
   "version": "2.0.0-beta.1"
 }
